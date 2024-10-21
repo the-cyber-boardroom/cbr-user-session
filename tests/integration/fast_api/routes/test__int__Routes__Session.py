@@ -1,6 +1,7 @@
 from unittest                                           import TestCase
 from cbr_shared.cbr_backend.session.Temp_DB_Session     import Temp_DB_Session
 from cbr_user_session.fast_api.routes.Routes__Session   import Routes__Session
+from osbot_aws.aws.boto3.View_Boto3_Rest_Calls import print_boto3_calls
 from osbot_utils.utils.Misc                             import random_text
 from osbot_utils.utils.Objects                          import __
 from tests.integration.user_session__objs_for_tests     import user_session__assert_local_stack
@@ -18,6 +19,13 @@ class test__int__Routes__Session(TestCase):
         with Temp_DB_Session(session_id=session_id):
             with self.routes_session as _:
                 assert _.session_exists(session_id) is True
+
+    def test_session_exists__with_trace(self):
+        session_id = random_text('an-random-session', lowercase=True)
+        with Temp_DB_Session(session_id=session_id):
+            with self.routes_session as _:
+                trace_result = _.session_exists__with_trace(session_id)
+                #print(trace_result)
 
     def test__behaviour_of__Temp_DB_Session(self):
         with self.routes_session as _:
