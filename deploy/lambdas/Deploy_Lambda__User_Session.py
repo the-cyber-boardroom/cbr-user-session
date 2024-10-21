@@ -5,7 +5,7 @@ from osbot_aws.deploy.Deploy_Lambda         import Deploy_Lambda
 from cbr_user_session.utils.Version         import version__cbr_user_session
 
 
-class Deploy_Lambda__User_Sesion(Type_Safe):
+class Deploy_Lambda__User_Session(Type_Safe):
     lambda_name : str = 'cbr_user_session'
 
     def __init__(self, **kwargs):
