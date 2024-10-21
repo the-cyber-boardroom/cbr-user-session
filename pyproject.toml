@@ -1,15 +1,15 @@
 [tool.poetry]
-name        = "cbr_xyz"
+name        = "cbr_user_session"
 version     = "v0.8.1"
-description = "CBR - XYZ"
+description = "CBR - User Session"
 authors     = ["Dinis Cruz <dinis.cruz@owasp.org>"]
 license     = "MIT"
 readme      = "README.md"
-homepage    = "https://github.com/the-cyber-boardroom/cbr-xyz"
-repository  = "https://github.com/the-cyber-boardroom/cbr-xyz"
+homepage    = "https://github.com/the-cyber-boardroom/cbr-user-session"
+repository  = "https://github.com/the-cyber-boardroom/cbr-user-session"
 
 [tool.poetry.dependencies]
-python          = "^3.7"
+python          = "^3.11"
 osbot-utils     = "*"
 
 

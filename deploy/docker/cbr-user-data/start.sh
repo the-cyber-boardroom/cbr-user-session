@@ -1,0 +1,3 @@
+#!/bin/bash
+
+uvicorn cbr_user_session.lambdas.handler:app --reload --host 0.0.0.0 --port 8080

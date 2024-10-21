@@ -1,0 +1,8 @@
+services:
+  cbr_user_session:
+    build:
+      context: ../../..
+      dockerfile: ./deploy/docker/cbr_user_session/Dockerfile
+    platform: linux/amd64
+    container_name: cbr_user_session
+    tty: true

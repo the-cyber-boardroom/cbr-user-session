@@ -4,15 +4,31 @@ description: "run-tests"
 runs:
   using: "composite"
   steps:
-#    - name: Start Local Stack
-#      uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/docker__local-stack@dev
+    - name: Start Local Stack
+      uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/docker__local-stack@dev
 
-    - name: Install Dependencies
-      uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/poetry__install@dev
+    # todo: move to OSbot-GitHub-Actions  as pytest_run_tests
+    - name: Install Python 3.x
+      uses: actions/setup-python@v4
       with:
-        pip_install: '-r requirements-test.txt'
+        python-version: 3.11
 
-    - name: Run Unit Tests
-      uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/poetry__run-unit-tests@dev
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
       with:
-        test_target: 'tests'
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies (Code)
+      shell: bash
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+        pip install -e .
+
+    - name: Run tests with pytest
+      shell: bash
+      run: |
+        pytest -v -s --durations=0 tests

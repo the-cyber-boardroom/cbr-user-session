@@ -1,11 +1,11 @@
 ---
-title: CBR XYZ
+title: CBR User Session
 ---
 
-# cbr-xyz
-Repo for XYZ (replace with name of project). 
+# cbr-user-session
+Repo for CBR User Session 
 
-This is the template for the other projects and builds up the main CI/CD pipeline
+This contains all the Auth and Session code
 
 
 ## Repo details
