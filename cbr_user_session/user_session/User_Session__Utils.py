@@ -6,7 +6,9 @@ class User_Session__Utils(Type_Safe):
     db_sessions: DB_Sessions
 
     def session(self, session_id):
-        return self.db_sessions.db_session(session_id)
+        db_session    = self.db_sessions.db_session(session_id)
+        db_session.s3 = self.db_sessions.s3                         # FIX to performance issue with session resolution
+        return db_session                                           # todo: figure out a better way to make this fix scale
 
     def session_exists(self, session_id):
         return self.session(session_id).exists()
