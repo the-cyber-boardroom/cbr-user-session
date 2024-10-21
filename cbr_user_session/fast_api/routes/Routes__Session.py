@@ -7,4 +7,4 @@ class Routes__Session(Fast_API_Routes):
         return False
 
     def setup_routes(self):
-        self.add_route_get(self.session_exists())
+        self.add_route_get(self.session_exists)
