@@ -9,13 +9,14 @@ homepage    = "https://github.com/the-cyber-boardroom/cbr-user-session"
 repository  = "https://github.com/the-cyber-boardroom/cbr-user-session"
 
 [tool.poetry.dependencies]
-python          = "^3.11"
-osbot-utils     = "*"
-cbr-shared      = "*"
-osbot-aws       = "*"
-osbot-fast-api  = "*"
-mangum          = "*"
-httpx           = "*"
+python            = "^3.11"
+osbot-utils       = "*"
+osbot-local-stack = "*"
+cbr-shared        = "*"
+osbot-aws         = "*"
+osbot-fast-api    = "*"
+mangum            = "*"
+httpx             = "*"
 
 
 [build-system]
