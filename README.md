@@ -10,5 +10,5 @@ This contains all the Auth and Session code
 
 ## Repo details
 
-![Current Release](https://img.shields.io/badge/release-v0.5.4-blue)
+![Current Release](https://img.shields.io/badge/release-v0.5.5-blue)
 
