@@ -1,11 +1,9 @@
-from cbr_user_session.User_Session__Config import USER_SESSION__DEFAULT__AWS_ACCOUNT_ID
-from cbr_user_session.fast_api.User_Session__Fast_API import User_Session__Fast_API
-from osbot_aws.testing.Temp__Random__AWS_Credentials import Temp_AWS_Credentials
-from osbot_utils.utils.Env                           import set_env
-from osbot_local_stack.local_stack.Local_Stack       import Local_Stack
-from osbot_utils.context_managers.capture_duration   import capture_duration
-
-
+from cbr_user_session.User_Session__Config              import USER_SESSION__DEFAULT__AWS_ACCOUNT_ID
+from cbr_user_session.fast_api.User_Session__Fast_API   import User_Session__Fast_API
+from osbot_aws.testing.Temp__Random__AWS_Credentials    import Temp_AWS_Credentials
+from osbot_utils.utils.Env                              import set_env
+from osbot_local_stack.local_stack.Local_Stack          import Local_Stack
+from osbot_utils.context_managers.capture_duration      import capture_duration
 
 def setup_env_vars():
     Temp_AWS_Credentials().set_vars()

@@ -33,10 +33,14 @@ class Routes__Guest(Fast_API_Routes):
 
     def exists(self, guest_id:str):
         db_guest = self.db_guests().db_guest(guest_id)
-        return db_guest.exists()
+        if db_guest.exists():
+            return status_ok("Guest exists")
+        else:
+            return status_error(f"Guest with id {guest_id} not found")
 
     def setup_routes(self):
         self.add_route_get(self.create)
         self.add_route_get(self.data  )
         self.add_route_get(self.delete)
+        self.add_route_get(self.exists)
         return self

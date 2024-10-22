@@ -27,16 +27,24 @@ class test__client__Routes__Guest(TestCase):
     def test__guests__create(self):
         guest_name  = 'an-guest-name'
         path__create  = f'/guest/create?guest_name={guest_name}'
-        guest_config  = str_to_obj(self.client.get(path__create)).data
+        guest_config  = str_to_obj(self.client.get(path__create))
         #user_id       = guest_config.user_id                               # todo add assert to see if user exists ok
         #session_id    = guest_config.session_id                            # todo add assert to see if session exists ok
         guest_id      = guest_config.guest_id
 
         assert guest_config.guest_name == guest_name
 
-        path__delete    = f'/guest/delete?guest_id={guest_id}'
-        delete_response = str_to_obj(self.client.get(path__delete))
-        assert delete_response.message == 'Guest deleted ok'
+        path__exists      = f'/guest/exists?guest_id={guest_id}'
+        path__delete      = f'/guest/delete?guest_id={guest_id}'
+        exists_response_1 = str_to_obj(self.client.get(path__exists))
+        delete_response_1 = str_to_obj(self.client.get(path__delete))
+        exists_response_2 = str_to_obj(self.client.get(path__exists))
+        delete_response_2 = str_to_obj(self.client.get(path__delete))
+        assert exists_response_1.message == 'Guest exists'
+        assert delete_response_1.message == 'Guest deleted ok'
+        assert exists_response_2.message == f'Guest with id {guest_id} not found'
+        assert delete_response_2.message == f'Error deleting guest with id: {guest_id}'
+
 
 
     def test__guests__data(self):

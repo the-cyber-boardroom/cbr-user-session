@@ -8,13 +8,9 @@ class S3_DB__Guests(S3_DB__CBR):
         return S3_DB__Guest(guest_id=guest_id)
 
     def db_guest__create(self, guest_name:str=None):
-        try:
-            db_guest = S3_DB__Guest()
-            if db_guest.create(guest_name=guest_name):
-                return status_ok(data=db_guest.guest_config())
-            return status_error(f"Error creating guest with name: {guest_name}")
-        except Exception as error:
-            return status_error(f"Error in creating guest: {error}")
+        db_guest = S3_DB__Guest()
+        db_guest.create(guest_name=guest_name)
+        return db_guest.guest_config()
 
     def db_guests(self):
         for session_id in self.db_guests__ids():

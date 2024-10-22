@@ -28,7 +28,7 @@ runs:
         pip install -r requirements-test.txt
         pip install -e .
 
-    - name: Run tests with pytest
+    - name: Run tests with pytest (and Coverage)
       shell: bash
       run: |
-        pytest -v -s --durations=0 tests
+        coverage run --source=${{ env.PACKAGE_NAME }} -m pytest -v -s --durations=0 tests

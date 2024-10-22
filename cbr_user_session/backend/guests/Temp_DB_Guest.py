@@ -15,20 +15,16 @@ class Temp_DB_Guest(Type_Safe):
         return user_session__shared_objects.db_guests()
 
     def __enter__(self) -> S3_DB__Guest:
-        self.db_guest().create(guest_name=self.guest_name)
+        self.create()
         return self.db_guest()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.db_guest().delete()
-        pass
+        self.delete()
 
     def create(self):
-        self.db_guest().create()
+        self.db_guest().create(guest_name=self.guest_name)
         return self.db_guest()
 
     def delete(self):
         self.db_guest().delete()
         return self
-
-    def exists(self):
-        return self.db_guest().exists()
