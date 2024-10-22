@@ -8,12 +8,12 @@ class Model__Guest__Config(Type_Safe):
     created__date   : str               = None
     created__time   : str               = None
     timestamp       : Timestamp_Now     = None
-    guest__user_name: str               = None
+    guest__name     : str               = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self.guest__user_name is None:
-            self.guest__user_name = random_text('guest', lowercase=True, length=5)
+        if self.guest__name is None:
+            self.guest__name = random_text('guest', lowercase=True, length=5)
         if self.timestamp        is None:
             self.timestamp        = Timestamp_Now()
         self.created__date = timestamp_to_str_date(self.timestamp)

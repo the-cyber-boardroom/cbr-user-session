@@ -10,10 +10,10 @@ class Routes__Guests(Fast_API_Routes):
         return user_session__shared_objects.db_guests()
 
     def data(self):
-        return self.db_guests().db_guests_data()
+        return self.db_guests().db_guests__data()
 
     def ids(self):
-        return self.db_guests().db_guests_ids()
+        return self.db_guests().db_guests__ids()
 
     def setup_routes(self):
         self.add_route_get(self.data)

@@ -1,4 +1,5 @@
 from unittest                                       import TestCase
+from cbr_user_session.fast_api.routes.Routes__Guest import Routes__Guest
 from osbot_utils.utils.Objects                      import __, str_to_obj
 from osbot_utils.helpers.Random_Guid                import Random_Guid
 from cbr_user_session.backend.guests.Temp_DB_Guest  import Temp_DB_Guest
@@ -13,10 +14,22 @@ class test__client__Routes__Guest(TestCase):
         cls.client          = user_session__fast_api__client
         cls.db_guest        = Temp_DB_Guest().create()
         cls.guest_id        = cls.db_guest.guest_id
+        cls.routes_guest    = Routes__Guest()
 
     @classmethod
     def tearDownClass(cls):
         assert cls.db_guest.delete() is True
+
+    def test__setUpClass(self):
+        assert self.db_guest.exists() is True
+        assert self.routes_guest.data(self.guest_id).get('status') == 'ok'
+
+    # def test__guests__create(self):
+    #     guest_name = 'an-guest-name'
+    #     path = f'/guest/create?guest_name={guest_name}'
+    #     response = self.client.get(path).json()
+    #     pprint(response)
+
 
     def test__guests__data(self):
         path               = f'/guest/data?guest_id={self.guest_id}'

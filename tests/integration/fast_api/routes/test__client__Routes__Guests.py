@@ -1,5 +1,5 @@
-from unittest                                      import TestCase
-from cbr_user_session.backend.guests.Temp_DB_Guest import Temp_DB_Guest
+from unittest                                       import TestCase
+from cbr_user_session.backend.guests.Temp_DB_Guest  import Temp_DB_Guest
 from tests.integration.user_session__objs_for_tests import user_session__assert_local_stack, user_session__fast_api__client
 
 

@@ -69,13 +69,13 @@ class test_S3_DB__Guest(TestCase):
             assert _.exists()  is False
 
     def test_guest_config__update(self):
-        guest__user_name = 'some-name'
+        guest__name = 'some-name'
         with self.db_guest as _:
             assert _.exists() is False
-            guest_config =  Model__Guest__Config(guest__user_name=guest__user_name)
+            guest_config =  Model__Guest__Config(guest__name=guest__name)
             assert _.guest_config__update(guest_config) is True
             assert _.exists() is True
-            assert guest_config.guest__user_name == guest__user_name
+            assert guest_config.guest__name == guest__name
             assert _.delete() is True
 
     def test_s3_folder__guest_data(self):

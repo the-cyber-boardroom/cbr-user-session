@@ -13,7 +13,7 @@ class test_Temp_DB_Guest(TestCase):
         user_session__assert_local_stack()
 
     def test__enter__exit(self):
-        guest_config = Model__Guest__Config(guest__user_name='some-name')
+        guest_config = Model__Guest__Config(guest__name='some-name')
         with Temp_DB_Guest(guest_config=guest_config) as _:
             assert type(_)                   is S3_DB__Guest
             assert _.exists()                is True

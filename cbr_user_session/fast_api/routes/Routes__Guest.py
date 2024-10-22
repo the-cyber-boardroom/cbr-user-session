@@ -11,6 +11,9 @@ class Routes__Guest(Fast_API_Routes):
     def db_guests(self):
         return user_session__shared_objects.db_guests()
 
+    def create(self, guest_name:str):
+        return self.db_guests().db_guest__create(guest_name)
+
     def data(self, guest_id:str):
         try:
             db_guest = self.db_guests().db_guest(guest_id)
@@ -21,8 +24,15 @@ class Routes__Guest(Fast_API_Routes):
         except Exception as error:
             return status_error(f"Error in data: {error}")
 
-    def ids(self):
-        return self.db_guests().db_guests_ids()
+    def delete(self, guest_id:str):
+        db_guest = self.db_guests().db_guest(guest_id)
+        if db_guest.exists():
+            return db_guest.delete()
+        return False
+
+    def exists(self, guest_id:str):
+        db_guest = self.db_guests().db_guest(guest_id)
+        return db_guest.exists()
 
     def setup_routes(self):
         self.add_route_get(self.data)
