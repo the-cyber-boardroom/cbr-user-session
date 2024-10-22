@@ -1,6 +1,6 @@
 [tool.poetry]
 name        = "cbr_user_session"
-version     = "v0.5.2"
+version     = "v0.5.3"
 description = "CBR - User Session"
 authors     = ["Dinis Cruz <dinis.cruz@owasp.org>"]
 license     = "MIT"
