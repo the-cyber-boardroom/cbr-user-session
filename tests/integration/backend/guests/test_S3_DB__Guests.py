@@ -2,6 +2,7 @@ from unittest                                           import TestCase
 from cbr_shared.aws.s3.S3_DB_Base                       import S3_DB_Base
 from cbr_shared.cbr_backend.cbr.S3_DB__CBR              import S3_DB__CBR
 from osbot_aws.aws.s3.S3__DB_Base                       import S3__DB_Base
+from cbr_user_session.User_Session__Shared_Objects      import user_session__shared_objects
 from osbot_utils.base_classes.Type_Safe                 import Type_Safe
 from osbot_utils.utils.Objects                          import __, base_types
 from cbr_user_session.backend.guests.S3_DB__Guests      import S3_DB__Guests
@@ -13,7 +14,7 @@ class test_S3_DB__Guests(TestCase):
     @classmethod
     def setUpClass(cls):
         user_session__assert_local_stack()
-        cls.db_guests = S3_DB__Guests()
+        cls.db_guests = user_session__shared_objects.db_guests()
 
     def test_setUpClass(self):
         with self.db_guests  as _:

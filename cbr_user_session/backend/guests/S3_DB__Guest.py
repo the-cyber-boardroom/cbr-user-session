@@ -1,7 +1,4 @@
-import logging
-
 from cbr_shared.cbr_backend.cbr.S3_DB__CBR          import S3_DB__CBR
-from osbot_utils.base_classes.Type_Safe import Type_Safe
 from osbot_utils.helpers.Random_Guid                import Random_Guid
 from osbot_utils.utils.Http                         import url_join_safe
 from osbot_utils.utils.Status                       import status_ok
@@ -27,24 +24,29 @@ class S3_DB__Guest(S3_DB__CBR):
     def exists(self):
         return self.s3_file_exists(self.s3_key__guest__config())
 
+    def guest_config(self) -> Model__Guest__Config:
+        s3_key_guest_config = self.s3_key__guest__config()
+        if self.s3_file_exists(s3_key_guest_config):
+            guest_config_json = self.s3_file_contents_json(s3_key_guest_config)
+            guest_config = Model__Guest__Config(**guest_config_json)
+            return guest_config
+        return None
+
     def guest_config__update(self, guest_config: Model__Guest__Config):
         if type(guest_config) is Model__Guest__Config:
-            guest_config.guest_id = self.guest_id                       # make sure these always match
             return self.s3_save_data(data=guest_config.json(), s3_key=self.s3_key__guest__config())
         raise ValueError("guest_config data needs to be of type Model__Guest__Config")
 
     # s3 key generation
 
     def s3_folder__guest_data(self):
-        return self.guest_id
+        return url_join_safe(self.s3_folder_guests(), self.guest_id)
 
     def s3_folder__guest_data__files(self):
         return self.s3_folder_files(self.s3_folder__guest_data())
 
     def s3_key__guest__config(self):
         return self.s3_key__in__guest_folder(FILE_NAME__GUEST_CONFIG)
-
-
 
     def s3_key__in__guest_folder(self, file_name):
         return url_join_safe(self.s3_folder__guest_data(), file_name)
