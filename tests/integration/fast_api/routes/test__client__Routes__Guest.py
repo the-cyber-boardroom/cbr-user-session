@@ -1,4 +1,5 @@
 from unittest                                       import TestCase
+from cbr_user_session.backend.guests.S3_DB__Guest   import S3_DB__Guest
 from cbr_user_session.fast_api.routes.Routes__Guest import Routes__Guest
 from osbot_utils.utils.Objects                      import __, str_to_obj
 from osbot_utils.helpers.Random_Guid                import Random_Guid
@@ -28,11 +29,21 @@ class test__client__Routes__Guest(TestCase):
         guest_name  = 'an-guest-name'
         path__create  = f'/guest/create?guest_name={guest_name}'
         guest_config  = str_to_obj(self.client.get(path__create))
-        #user_id       = guest_config.user_id                               # todo add assert to see if user exists ok
-        #session_id    = guest_config.session_id                            # todo add assert to see if session exists ok
+        user_id       = guest_config.user_id
+        session_id    = guest_config.session_id
         guest_id      = guest_config.guest_id
 
         assert guest_config.guest_name == guest_name
+        db_guest   = S3_DB__Guest(guest_id=guest_id)
+        db_user    = db_guest.db_user()
+        db_session = db_guest.db_session()
+
+        assert db_guest  .exists()   is True
+        assert db_user   .exists()   is True
+        assert db_session.exists()   is True
+        assert db_guest.guest_id     == guest_id
+        assert db_user.user_id       == user_id
+        assert db_session.session_id == session_id
 
         path__exists      = f'/guest/exists?guest_id={guest_id}'
         path__delete      = f'/guest/delete?guest_id={guest_id}'
