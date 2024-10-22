@@ -18,7 +18,7 @@ class User_Session__Fast_API(Fast_API):
         super().setup()
         return self
 
-    def setup__local_stack(self):
+    def setup__local_stack(self):                       # pragma: no cover
         if user_session__config.use_local_stack:
             Local_Stack().activate()
 
