@@ -1,4 +1,5 @@
 from unittest                                       import TestCase
+from cbr_user_session.User_Session__Shared_Objects  import user_session__shared_objects
 from osbot_utils.utils.Objects                      import __, dict_to_obj
 from cbr_user_session.backend.guests.S3_DB__Guest   import S3_DB__Guest
 from cbr_user_session.schemas.Model__Guest__Config  import Model__Guest__Config
@@ -12,7 +13,7 @@ class test_S3_DB__Guest(TestCase):
         user_session__assert_local_stack()
 
     def setUp(self):
-        self.db_guest = S3_DB__Guest()
+        self.db_guest = user_session__shared_objects.db_guest()
 
     def test__init__(self):
         with self.db_guest as _:
