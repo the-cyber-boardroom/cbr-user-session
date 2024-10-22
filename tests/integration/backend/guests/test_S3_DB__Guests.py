@@ -3,6 +3,7 @@ from cbr_shared.aws.s3.S3_DB_Base                       import S3_DB_Base
 from cbr_shared.cbr_backend.cbr.S3_DB__CBR              import S3_DB__CBR
 from osbot_aws.aws.s3.S3__DB_Base                       import S3__DB_Base
 from cbr_user_session.User_Session__Shared_Objects      import user_session__shared_objects
+from cbr_user_session.backend.guests.Temp_DB_Guest      import Temp_DB_Guest
 from osbot_utils.base_classes.Type_Safe                 import Type_Safe
 from osbot_utils.utils.Objects                          import __, base_types
 from cbr_user_session.backend.guests.S3_DB__Guests      import S3_DB__Guests
@@ -33,4 +34,16 @@ class test_S3_DB__Guests(TestCase):
                                               use_minio                      = False                             )
             assert _.s3_bucket()        == 'cyber-boardroom-000011110000-server-data'
             assert _.s3_folder_guests() == 'guests'
+
+    def test_db_guests_data(self):
+        with self.db_guests as _:
+            with Temp_DB_Guest() as guest_1:
+                guests_data = _.db_guests_data()
+                assert guests_data[guest_1.guest_id] == guest_1.guest_config().json()
+
+    def test_db_guests_ids(self):
+        with self.db_guests as _:
+            with Temp_DB_Guest() as guest_1:
+                assert guest_1.guest_id in _.db_guests_ids()
+
 
