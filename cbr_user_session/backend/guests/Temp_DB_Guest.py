@@ -21,7 +21,7 @@ class Temp_DB_Guest(Type_Safe):
 
     def create(self):
         self.db_guest().create()
-        return self.db_guest
+        return self.db_guest()
 
     def delete(self):
         self.db_guest().delete()

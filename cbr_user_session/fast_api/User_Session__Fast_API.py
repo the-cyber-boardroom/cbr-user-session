@@ -1,6 +1,7 @@
-from osbot_local_stack.local_stack.Local_Stack import Local_Stack
-
-from cbr_user_session.User_Session__Config import user_session__config
+from osbot_local_stack.local_stack.Local_Stack          import Local_Stack
+from cbr_user_session.User_Session__Config              import user_session__config
+from cbr_user_session.fast_api.routes.Routes__Guest     import Routes__Guest
+from cbr_user_session.fast_api.routes.Routes__Guests    import Routes__Guests
 from cbr_user_session.fast_api.routes.Routes__Session   import Routes__Session
 from osbot_fast_api.api.Fast_API                        import Fast_API
 from cbr_user_session.fast_api.routes.Routes__Info      import Routes__Info
@@ -24,3 +25,5 @@ class User_Session__Fast_API(Fast_API):
     def setup_routes(self):
         self.add_routes(Routes__Info   )
         self.add_routes(Routes__Session)
+        self.add_routes(Routes__Guest  )
+        self.add_routes(Routes__Guests )
