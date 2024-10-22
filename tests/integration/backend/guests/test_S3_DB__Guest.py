@@ -1,5 +1,8 @@
 from unittest                                       import TestCase
+from cbr_shared.cbr_backend.users.DB_User           import DB_User
+from cbr_shared.cbr_backend.session.DB_Session      import DB_Session
 from cbr_user_session.User_Session__Shared_Objects  import user_session__shared_objects
+from cbr_user_session.backend.guests.Temp_DB_Guest  import Temp_DB_Guest
 from osbot_utils.utils.Objects                      import __, dict_to_obj
 from cbr_user_session.backend.guests.S3_DB__Guest   import S3_DB__Guest
 from cbr_user_session.schemas.Model__Guest__Config  import Model__Guest__Config
@@ -31,14 +34,30 @@ class test_S3_DB__Guest(TestCase):
                                                                       region_name           = None  ),
                                   use_minio                      = False                             )
 
+    def test_db_session(self):
+        with Temp_DB_Guest() as _:
+            assert type(_.db_session()) is DB_Session
+            assert type(_.db_user   ()) is DB_User
+
+            assert _             .exists() is True
+            assert _.db_session().exists() is True
+            assert _.db_user   ().exists() is True
+
+        assert _             .exists() is False
+        assert _.db_session().exists() is False
+        assert _.db_user   ().exists() is False
+
+        # pprint(_          .s3_folder_files__all())
+        # pprint(_.db_user().s3_folder_files__all())
+        # _.bucket_delete_all_files()
+        # _.db_user().bucket_delete_all_files()
+
+
     def test_create(self):
         with self.db_guest as _:
             create_result = dict_to_obj(_.create())
-            assert create_result                    == __(data    = __(guest__user_name = None                                  ,
-                                                                       timestamp        = create_result.data.timestamp          ),
-                                                          error   = None                                                         ,
-                                                          message = 'guest_user_created_ok'                                      ,
-                                                          status  = 'ok'                                                         )
+            assert create_result                    == __(message = 'guest_user_created_ok'    ,
+                                                          status  = 'ok', data=None, error=None)
             assert _.s3_folder__guest_data__files() == ['guest-config.json']
             assert _.exists()                       is True
             assert _.delete()                       is True
