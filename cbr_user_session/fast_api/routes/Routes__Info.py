@@ -8,7 +8,7 @@ class Routes__Info(Fast_API_Routes):
 
     def db_session(self):
         user_session_utils = User_Session__Utils()
-        with user_session_utils.db_sessions as _:
+        with user_session_utils.db_sessions() as _:
             return dict(bucket_exists = _.bucket_exists      (),
                         bucket_name   = _.s3_bucket          (),
                         local_stack   = _.using_local_stack  (),
