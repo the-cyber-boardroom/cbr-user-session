@@ -35,4 +35,5 @@ class test_User_Session__Config(TestCase):
 
         assert aws_config.account_id()     == USER_SESSION__DEFAULT__AWS_ACCOUNT_ID
         assert user_session_config__before == user_session__config.obj()
-        set_env(ENV_NAME__USER_SESSION__USE_LOCAL_STACK, use_local_stack_env__before)
+        if use_local_stack_env__before is not None:
+            set_env(ENV_NAME__USER_SESSION__USE_LOCAL_STACK, use_local_stack_env__before)
