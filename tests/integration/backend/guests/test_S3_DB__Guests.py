@@ -41,11 +41,11 @@ class test_S3_DB__Guests(TestCase):
                 guests_data = _.db_guests__data()
                 assert guests_data[guest_1.guest_id] == guest_1.guest_config().json()
 
-    def test_db_guests_data__delete(self):
+    def test_db_guests__delete_all(self):
         with self.db_guests as _:
             with Temp_DB_Guest() as guest_1:
                 assert guest_1.exists()
-                deleted_guests_ids = _.db_guests__delete()
+                deleted_guests_ids = _.db_guests__delete_all()
                 assert guest_1.guest_id in deleted_guests_ids
                 assert guest_1.exists() is False
                 assert _.db_guests__ids() == []

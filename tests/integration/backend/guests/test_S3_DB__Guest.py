@@ -3,9 +3,8 @@ from cbr_shared.cbr_backend.users.DB_User           import DB_User
 from cbr_shared.cbr_backend.session.DB_Session      import DB_Session
 from cbr_user_session.User_Session__Shared_Objects  import user_session__shared_objects
 from cbr_user_session.backend.guests.Temp_DB_Guest  import Temp_DB_Guest
-from osbot_utils.utils.Objects                      import __, dict_to_obj
+from osbot_utils.utils.Objects                      import __
 from cbr_user_session.backend.guests.S3_DB__Guest   import S3_DB__Guest
-from cbr_user_session.schemas.Model__Guest__Config  import Model__Guest__Config
 from tests.integration.user_session__objs_for_tests import user_session__assert_local_stack
 
 
@@ -16,7 +15,9 @@ class test_S3_DB__Guest(TestCase):
         user_session__assert_local_stack()
 
     def setUp(self):
-        self.db_guest = user_session__shared_objects.db_guest()
+        self.db_guests   = user_session__shared_objects.db_guests()
+        self.db_guest    = self.db_guests.db_guest()
+        self.db_guest_id = self.db_guest.guest_id
 
     def test__init__(self):
         with self.db_guest as _:
@@ -54,29 +55,28 @@ class test_S3_DB__Guest(TestCase):
 
 
     def test_create(self):
-        with self.db_guest as _:
-            create_result = dict_to_obj(_.create())
-            assert create_result                    == __(message = 'guest_user_created_ok'    ,
-                                                          status  = 'ok', data=None, error=None)
-            assert _.s3_folder__guest_data__files() == ['guest-config.json']
-            assert _.exists()                       is True
-            assert _.delete()                       is True
-            assert _.exists()                       is False
-            assert _.s3_folder__guest_data__files() == []
+      with self.db_guest as _:
+        assert _.create()                       is True                         # create guest
+
+        assert _.s3_folder__guest_data__files()  == ['guest-config.json']
+        assert _.exists()                        is True
+        assert _.db_user   ().exists()           is True
+        assert _.db_session().exists()           is True
+        assert _.guest_config().guest_id         == _.guest_id
+        assert _.guest_config().user_id          == _.db_user().user_id
+        assert _.guest_config().session_id       == _.db_session().session_id
+
+        assert _.delete()                        is True                     # delete guest
+        assert _.delete()                        is False
+        assert _.exists()                        is False
+        assert _.db_user   ().exists()           is False
+        assert _.db_session().exists()           is False
+        assert _.s3_folder__guest_data__files()  == []
+        assert _.guest_config(reload_cache=True) is None
 
     def test_exists(self):
         with self.db_guest as _:
             assert _.exists()  is False
-
-    def test_guest_config__update(self):
-        guest__name = 'some-name'
-        with self.db_guest as _:
-            assert _.exists() is False
-            guest_config =  Model__Guest__Config(guest__name=guest__name)
-            assert _.guest_config__update(guest_config) is True
-            assert _.exists() is True
-            assert guest_config.guest__name == guest__name
-            assert _.delete() is True
 
     def test_s3_folder__guest_data(self):
         with self.db_guest as _:

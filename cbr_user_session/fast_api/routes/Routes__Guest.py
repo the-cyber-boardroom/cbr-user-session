@@ -27,13 +27,16 @@ class Routes__Guest(Fast_API_Routes):
     def delete(self, guest_id:str):
         db_guest = self.db_guests().db_guest(guest_id)
         if db_guest.exists():
-            return db_guest.delete()
-        return False
+            if db_guest.delete():
+                return status_ok("Guest deleted ok")
+        return status_error(f"Error deleting guest with id: {guest_id}")
 
     def exists(self, guest_id:str):
         db_guest = self.db_guests().db_guest(guest_id)
         return db_guest.exists()
 
     def setup_routes(self):
-        self.add_route_get(self.data)
+        self.add_route_get(self.create)
+        self.add_route_get(self.data  )
+        self.add_route_get(self.delete)
         return self

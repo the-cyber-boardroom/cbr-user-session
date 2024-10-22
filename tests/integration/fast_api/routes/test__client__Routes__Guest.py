@@ -24,11 +24,19 @@ class test__client__Routes__Guest(TestCase):
         assert self.db_guest.exists() is True
         assert self.routes_guest.data(self.guest_id).get('status') == 'ok'
 
-    # def test__guests__create(self):
-    #     guest_name = 'an-guest-name'
-    #     path = f'/guest/create?guest_name={guest_name}'
-    #     response = self.client.get(path).json()
-    #     pprint(response)
+    def test__guests__create(self):
+        guest_name  = 'an-guest-name'
+        path__create  = f'/guest/create?guest_name={guest_name}'
+        guest_config  = str_to_obj(self.client.get(path__create)).data
+        #user_id       = guest_config.user_id                               # todo add assert to see if user exists ok
+        #session_id    = guest_config.session_id                            # todo add assert to see if session exists ok
+        guest_id      = guest_config.guest_id
+
+        assert guest_config.guest_name == guest_name
+
+        path__delete    = f'/guest/delete?guest_id={guest_id}'
+        delete_response = str_to_obj(self.client.get(path__delete))
+        assert delete_response.message == 'Guest deleted ok'
 
 
     def test__guests__data(self):
