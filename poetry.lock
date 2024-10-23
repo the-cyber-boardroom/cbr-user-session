@@ -33,17 +33,17 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "boto3"
-version = "1.35.45"
+version = "1.35.46"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "boto3-1.35.45-py3-none-any.whl", hash = "sha256:f16c7edfcbbeb0a0c22d67d6ebbfcb332fa78d3ea88275e082260ba04fe65347"},
-    {file = "boto3-1.35.45.tar.gz", hash = "sha256:9f4a081e1940846171b51d903000a04322f1356d53225ce1028fc1760a155a70"},
+    {file = "boto3-1.35.46-py3-none-any.whl", hash = "sha256:a839ce09a844d92e0039f95851e88da9df80c89ebb4c7818b3e78247fd97a8a7"},
+    {file = "boto3-1.35.46.tar.gz", hash = "sha256:c9bab807b372d5b076d6aeb1d6513131fa0b74e32d8895128f8568b6521296ea"},
 ]
 
 [package.dependencies]
-botocore = ">=1.35.45,<1.36.0"
+botocore = ">=1.35.46,<1.36.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.10.0,<0.11.0"
 
@@ -52,13 +52,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.35.45"
+version = "1.35.46"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore-1.35.45-py3-none-any.whl", hash = "sha256:e07e170975721c94ec1e3bf71a484552ad63e2499f769dd14f9f37375b4993fd"},
-    {file = "botocore-1.35.45.tar.gz", hash = "sha256:9a898bfdd6b0027fee2018711192c15c2716bf6a7096b1168bd8a896df3664a1"},
+    {file = "botocore-1.35.46-py3-none-any.whl", hash = "sha256:8bbc9a55cae65a8db7f2e33ff087f4dbfc13fce868e8e3c5273ce9af367a555a"},
+    {file = "botocore-1.35.46.tar.gz", hash = "sha256:8c0ff5fdd611a28f5752189d171c69690dbc484fa06d74376890bb0543ec3dc1"},
 ]
 
 [package.dependencies]
@@ -85,13 +85,13 @@ osbot-markdown = "*"
 
 [[package]]
 name = "cbr-shared"
-version = "0.3.23"
+version = "0.3.27"
 description = "CBR - Shared"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "cbr_shared-0.3.23-py3-none-any.whl", hash = "sha256:f9a0f9a24f8c2d23151c186722d04d8d49eb71055fa0eb5035961d60037dd84e"},
-    {file = "cbr_shared-0.3.23.tar.gz", hash = "sha256:9906e1461fff9ae999292f0b79968e0d09a188d9831fdee85d2f5ca3eb96006a"},
+    {file = "cbr_shared-0.3.27-py3-none-any.whl", hash = "sha256:05fe4df57ab3663642088933b6ccca9cde6de36ec7e9544927d6359a056635ab"},
+    {file = "cbr_shared-0.3.27.tar.gz", hash = "sha256:324085c3a18ba67b0861e8b0322e80a79eb620ac971c92698807ab9aa4a81cc9"},
 ]
 
 [package.dependencies]
@@ -434,13 +434,13 @@ osbot-utils = "*"
 
 [[package]]
 name = "osbot-fast-api"
-version = "0.7.18"
+version = "0.7.19"
 description = "OWASP Security Bot - Fast API"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "osbot_fast_api-0.7.18-py3-none-any.whl", hash = "sha256:52650a6e1613318e09601a03a950aa4ec57ca34dc98a696b12be65c28468d51e"},
-    {file = "osbot_fast_api-0.7.18.tar.gz", hash = "sha256:33d0b394491af446fe2e1a702e54cc1d6c0b3e1cefadf00708e50fd300b40af2"},
+    {file = "osbot_fast_api-0.7.19-py3-none-any.whl", hash = "sha256:1cca913f18181b6c5bbe1f008a98f21920e5bf388acafefe6d9719c60b2d4ec1"},
+    {file = "osbot_fast_api-0.7.19.tar.gz", hash = "sha256:3a490617947b18abd6b42061ec499c27bb9108b5a1f55da7a81ae560a4aca0e4"},
 ]
 
 [package.dependencies]
@@ -665,13 +665,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "rich"
-version = "13.9.2"
+version = "13.9.3"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "rich-13.9.2-py3-none-any.whl", hash = "sha256:8c82a3d3f8dcfe9e734771313e606b39d8247bb6b826e196f4914b333b743cf1"},
-    {file = "rich-13.9.2.tar.gz", hash = "sha256:51a2c62057461aaf7152b4d611168f93a9fc73068f8ded2790f29fe2b5366d0c"},
+    {file = "rich-13.9.3-py3-none-any.whl", hash = "sha256:9836f5096eb2172c9e77df411c1b009bace4193d6a481d534fea75ebba758283"},
+    {file = "rich-13.9.3.tar.gz", hash = "sha256:bc1e01b899537598cf02579d2b9f4a415104d3fc439313a7a2c165d76557a08e"},
 ]
 
 [package.dependencies]

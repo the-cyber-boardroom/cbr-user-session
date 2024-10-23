@@ -1,3 +1,4 @@
+from cbr_shared.config.Server_Config__CBR_Website import server_config__cbr_website
 from osbot_local_stack.local_stack.Local_Stack          import Local_Stack
 from cbr_user_session.User_Session__Config              import user_session__config
 from cbr_user_session.fast_api.routes.Routes__Guest     import Routes__Guest
@@ -19,7 +20,7 @@ class User_Session__Fast_API(Fast_API):
         return self
 
     def setup__local_stack(self):                       # pragma: no cover
-        if user_session__config.use_local_stack:
+        if server_config__cbr_website.cbr_config().use_local_stack():
             Local_Stack().activate()
 
     def setup_routes(self):
