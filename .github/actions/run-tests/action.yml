@@ -32,3 +32,8 @@ runs:
       shell: bash
       run: |
         coverage run --source=${{ env.PACKAGE_NAME }} -m pytest -v -s --durations=0 tests
+
+    - name: Print coverage report
+      shell: bash
+      run: |
+        coverage report -m

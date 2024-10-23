@@ -15,7 +15,6 @@ env:
 jobs:
 
   run-tests:
-    if: False
     name: "Run tests"
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +31,8 @@ jobs:
         uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__increment-tag@dev
         with:
           release_type: ${{ env.RELEASE_TYPE }}
-#    needs:
-#      - run-tests
+    needs:
+      - run-tests
 
   publish-to-pypi:
     #if: False

@@ -1,7 +1,7 @@
+from cbr_shared.cbr_sites.CBR__Shared_Objects       import cbr_shared_objects
 from osbot_fast_api.api.Fast_API_Routes             import Fast_API_Routes
 from osbot_utils.utils.Status                       import status_ok, status_error
 from osbot_utils.decorators.methods.cache_on_self   import cache_on_self
-from cbr_user_session.User_Session__Shared_Objects  import user_session__shared_objects
 
 
 class Routes__Guest(Fast_API_Routes):
@@ -9,7 +9,7 @@ class Routes__Guest(Fast_API_Routes):
 
     @cache_on_self
     def db_guests(self):
-        return user_session__shared_objects.db_guests()
+        return cbr_shared_objects.db_guests()
 
     def create(self, guest_name:str):
         return self.db_guests().db_guest__create(guest_name)

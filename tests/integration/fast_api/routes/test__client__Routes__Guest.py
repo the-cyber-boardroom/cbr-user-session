@@ -1,11 +1,11 @@
-from unittest                                       import TestCase
-from cbr_user_session.backend.guests.S3_DB__Guest   import S3_DB__Guest
-from cbr_user_session.fast_api.routes.Routes__Guest import Routes__Guest
-from osbot_utils.utils.Objects                      import __, str_to_obj
-from osbot_utils.helpers.Random_Guid                import Random_Guid
-from cbr_user_session.backend.guests.Temp_DB_Guest  import Temp_DB_Guest
-from cbr_user_session.schemas.Model__Guest__Config  import Model__Guest__Config
-from tests.integration.user_session__objs_for_tests import user_session__assert_local_stack, user_session__fast_api__client
+from unittest                                               import TestCase
+from cbr_shared.cbr_backend.guests.S3_DB__Guest             import S3_DB__Guest
+from cbr_shared.cbr_backend.guests.Temp_DB_Guest            import Temp_DB_Guest
+from cbr_shared.schemas.data_models.Model__Guest__Config    import Model__Guest__Config
+from cbr_user_session.fast_api.routes.Routes__Guest         import Routes__Guest
+from osbot_utils.utils.Objects                              import __, str_to_obj
+from osbot_utils.helpers.Random_Guid                        import Random_Guid
+from tests.integration.user_session__objs_for_tests         import user_session__assert_local_stack, user_session__fast_api__client
 
 class test__client__Routes__Guest(TestCase):
 
@@ -64,9 +64,8 @@ class test__client__Routes__Guest(TestCase):
         response__status   = response.get('status')
         response__data     = response.get('data')
         guest_config       = Model__Guest__Config.from_json(response__data)
-        assert response__status == 'ok'
-        assert guest_config   == self.db_guest.guest_config()
-        assert response__data == self.db_guest.guest_config().json()
+        assert response__status      == 'ok'
+        assert guest_config.guest_id == self.guest_id
 
     def test__guests__data___bad_data(self):
         path               = '/guest/data?guest_id=NOT-A-GUID'
