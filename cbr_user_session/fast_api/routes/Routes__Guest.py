@@ -17,14 +17,14 @@ class Routes__Guest(Fast_API_Routes):
     def db_guests(self):
         return cbr_shared_objects.db_guests()
 
-    def create(self, guest_name:str):
+    def create(self, guest_name:str=None):
         return self.db_guests().db_guest__create(guest_name)
 
     def data(self, guest_id:str):
         try:
             db_guest = self.db_guests().db_guest(guest_id)
             if db_guest.exists():
-                return status_ok(data=db_guest.guest_config())
+                return status_ok(data=db_guest.guest_data())
             else:
                 return status_error(f"Guest with id {guest_id} not found")
         except Exception as error:
@@ -36,6 +36,7 @@ class Routes__Guest(Fast_API_Routes):
             if db_guest.delete():
                 return status_ok("Guest deleted ok")
         return status_error(f"Error deleting guest with id: {guest_id}")
+
 
     def exists(self, guest_id:str):
         db_guest = self.db_guests().db_guest(guest_id)
@@ -59,9 +60,9 @@ class Routes__Guest(Fast_API_Routes):
             return status_error(STATUS_ERROR__GUEST_NOT_FOUND)
 
     def setup_routes(self):
-        self.add_route_get(self.create         )
-        self.add_route_get(self.data           )
-        self.add_route_get(self.delete         )
-        self.add_route_get(self.exists         )
-        self.add_route_get(self.login_as_guest )
+        self.add_route_get(self.create           )
+        self.add_route_get(self.data             )
+        self.add_route_get(self.delete           )
+        self.add_route_get(self.exists           )
+        self.add_route_get(self.login_as_guest   )
         return self
