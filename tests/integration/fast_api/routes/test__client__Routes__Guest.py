@@ -31,7 +31,7 @@ class test__client__Routes__Guest(TestCase):
     def test__guest__create(self):
         guest_name  = 'an-guest-name'
         path__create  = f'/guest/create?guest_name={guest_name}'
-        guest_config  = str_to_obj(self.client.get(path__create))
+        guest_config  = str_to_obj(self.client.post(path__create))
         user_id       = guest_config.user_id
         session_id    = guest_config.session_id
         guest_id      = guest_config.guest_id
@@ -50,10 +50,10 @@ class test__client__Routes__Guest(TestCase):
 
         path__exists      = f'/guest/exists?guest_id={guest_id}'
         path__delete      = f'/guest/delete?guest_id={guest_id}'
-        exists_response_1 = str_to_obj(self.client.get(path__exists))
-        delete_response_1 = str_to_obj(self.client.get(path__delete))
-        exists_response_2 = str_to_obj(self.client.get(path__exists))
-        delete_response_2 = str_to_obj(self.client.get(path__delete))
+        exists_response_1 = str_to_obj(self.client.get   (path__exists))
+        delete_response_1 = str_to_obj(self.client.delete(path__delete))
+        exists_response_2 = str_to_obj(self.client.get   (path__exists))
+        delete_response_2 = str_to_obj(self.client.delete(path__delete))
         assert exists_response_1.message == 'Guest exists'
         assert delete_response_1.message == 'Guest deleted ok'
         assert exists_response_2.message == f'Guest with id {guest_id} not found'
@@ -85,22 +85,22 @@ class test__client__Routes__Guest(TestCase):
     def test__guest__login_as_guest(self):
         session_id  = self.db_guest.db_session__id()
         path        = f'/guest/login-as-guest?guest_id={self.guest_id}'
-        response  = self.client.get(path)
+        response  = self.client.post(path)
         assert response.json() == status_ok(message=STATUS_OK__LOGGED_IN_AS_USER)
         assert response.headers.get('set-cookie') == f'{COOKIE_NAME__CBR__SESSION_ID__USER}={session_id}; HttpOnly; Path=/; SameSite=lax'
 
     def test__guest__login_as_persona(self):
         session_id  = self.db_guest.db_session__id()
         path        = f'/guest/login-as-persona?persona_id={self.guest_id}'
-        response  = self.client.get(path)
+        response  = self.client.post(path)
         assert response.json() == status_ok(message=STATUS_OK__LOGGED_IN_AS_PERSONA)
         assert response.headers.get('set-cookie') == f'{COOKIE_NAME__CBR__SESSION_ID__PERSONA}={session_id}; HttpOnly; Path=/; SameSite=lax'
 
     # Add these new test methods to the test__client__Routes__Guest class:
     def test__guest__logout_all(self):
         # First login as both guest and persona
-        response_1              = self.client.get(f'/guest/login-as-guest?guest_id={self.guest_id}')
-        response_2              = self.client.get(f'/guest/login-as-persona?persona_id={self.guest_id}')
+        response_1              = self.client.post(f'/guest/login-as-guest?guest_id={self.guest_id}')
+        response_2              = self.client.post(f'/guest/login-as-persona?persona_id={self.guest_id}')
         cbr_session_id_user    = response_1.headers.get('cbr-session-id-user'   )
         cbr_session_id_persona = response_2.headers.get('cbr-session-id-persona')
         cookies_1              = parse_cookies(response_1.headers.get('set-cookie'), include_empty=False)
@@ -121,7 +121,7 @@ class test__client__Routes__Guest(TestCase):
 
         # Then logout all
         path = '/guest/logout-all'
-        response_3 = self.client.get(path)
+        response_3 = self.client.post(path)
         assert response_3.json() == status_ok(message=STATUS_OK__LOGGED_OUT_ALL)
 
         # Check that both cookies are deleted
@@ -154,7 +154,7 @@ class test__client__Routes__Guest(TestCase):
 
         # Then logout guest
         path = '/guest/logout-guest'
-        response = self.client.get(path)
+        response = self.client.post(path)
 
         assert response.json() == status_ok(message=STATUS_OK__LOGGED_OUT_GUEST)
 
@@ -175,7 +175,7 @@ class test__client__Routes__Guest(TestCase):
 
         # Then logout persona
         path = '/guest/logout-persona'
-        response = self.client.get(path)
+        response = self.client.post(path)
 
         assert response.json() == status_ok(message=STATUS_OK__LOGGED_OUT_PERSONA)
 

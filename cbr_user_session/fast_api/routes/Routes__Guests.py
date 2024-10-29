@@ -32,8 +32,8 @@ class Routes__Guests(Fast_API_Routes):
         return self.db_guests().db_guests__ids()
 
     def setup_routes(self):
-        self.add_route_get(self.create_demo_guests)
-        self.add_route_get(self.delete_all_guests )
-        self.add_route_get(self.data              )
-        self.add_route_get(self.ids               )
+        self.add_route_post  (self.create_demo_guests)
+        self.add_route_delete(self.delete_all_guests )
+        self.add_route_get   (self.data              )
+        self.add_route_get   (self.ids               )
         return self

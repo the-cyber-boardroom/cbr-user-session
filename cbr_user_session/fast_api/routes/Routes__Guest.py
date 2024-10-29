@@ -101,13 +101,13 @@ class Routes__Guest(Fast_API_Routes):
         return json_response
 
     def setup_routes(self):
-        self.add_route_get(self.create           )
-        self.add_route_get(self.data             )
-        self.add_route_get(self.delete           )
-        self.add_route_get(self.exists           )
-        self.add_route_get(self.login_as_guest   )
-        self.add_route_get(self.login_as_persona )
-        self.add_route_get(self.logout_all)
-        self.add_route_get(self.logout_guest)
-        self.add_route_get(self.logout_persona)
+        self.add_route_post   (self.create           )
+        self.add_route_get    (self.data             )
+        self.add_route_delete (self.delete           )
+        self.add_route_get    (self.exists           )
+        self.add_route_post   (self.login_as_guest   )
+        self.add_route_post   (self.login_as_persona )
+        self.add_route_post   (self.logout_all       )
+        self.add_route_post   (self.logout_guest     )
+        self.add_route_post   (self.logout_persona   )
         return self
