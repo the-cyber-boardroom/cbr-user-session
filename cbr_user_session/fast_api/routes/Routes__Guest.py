@@ -1,14 +1,14 @@
 from starlette.responses import JSONResponse
 
-from cbr_shared.cbr_backend.session.CBR__Session__Load  import COOKIE_NAME__SESSION_ID
 from cbr_shared.cbr_sites.CBR__Shared_Objects           import cbr_shared_objects
+from cbr_shared.cbr_sites.CBR__Shared__Constants import COOKIE_NAME__CBR__SESSION_ID__USER
 from osbot_fast_api.api.Fast_API_Routes                 import Fast_API_Routes
 from osbot_utils.utils.Status                           import status_ok, status_error
 from osbot_utils.decorators.methods.cache_on_self       import cache_on_self
 
-STATUS_OK__LOGGED_IN_AS_USER                    = f"Found guest, set {COOKIE_NAME__SESSION_ID} cookie to session id, so that user is now logged in as the provided guest id"
-STATUS_ERROR__FOUND_GUEST_BUT_NO_ACTIVE_SESSION = "Found guest, but there was not active session available"
-STATUS_ERROR__GUEST_NOT_FOUND                   = f"Guest not found"
+STATUS_OK__LOGGED_IN_AS_USER                     = f"Found guest, set {COOKIE_NAME__CBR__SESSION_ID__USER} cookie to session id, so that user is now logged in as the provided guest id"
+STATUS_ERROR__FOUND_GUEST_BUT_NO_ACTIVE_SESSION  = "Found guest, but there was not active session available"
+STATUS_ERROR__GUEST_NOT_FOUND                    = f"Guest not found"
 
 class Routes__Guest(Fast_API_Routes):
     tag : str = 'guest'
@@ -50,7 +50,7 @@ class Routes__Guest(Fast_API_Routes):
         if db_guest.exists():
             db_session = db_guest.db_session()
             if db_session.exists():
-                cookie_name    = COOKIE_NAME__SESSION_ID
+                cookie_name    = COOKIE_NAME__CBR__SESSION_ID__USER
                 cookie_value   = db_session.session_id
                 json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_IN_AS_USER))
                 json_response.set_cookie(key=cookie_name, value=cookie_value, httponly=True)

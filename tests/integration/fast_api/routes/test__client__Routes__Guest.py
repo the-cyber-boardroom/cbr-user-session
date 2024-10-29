@@ -1,7 +1,7 @@
 from unittest                                               import TestCase
 from cbr_shared.cbr_backend.guests.S3_DB__Guest             import S3_DB__Guest
 from cbr_shared.cbr_backend.guests.Temp_DB_Guest            import Temp_DB_Guest
-from cbr_shared.cbr_backend.session.CBR__Session__Load      import COOKIE_NAME__SESSION_ID
+from cbr_shared.cbr_sites.CBR__Shared__Constants            import COOKIE_NAME__CBR__SESSION_ID__USER
 from cbr_shared.schemas.data_models.Model__Guest__Config    import Model__Guest__Config
 from cbr_user_session.fast_api.routes.Routes__Guest         import Routes__Guest, STATUS_OK__LOGGED_IN_AS_USER
 from osbot_utils.utils.Objects                              import __, str_to_obj
@@ -86,5 +86,5 @@ class test__client__Routes__Guest(TestCase):
         path        = f'/guest/login-as-guest?guest_id={self.guest_id}'
         response  = self.client.get(path)
         assert response.json() == status_ok(message=STATUS_OK__LOGGED_IN_AS_USER)
-        assert response.headers.get('set-cookie') == f'{COOKIE_NAME__SESSION_ID}={session_id}; HttpOnly; Path=/; SameSite=lax'
+        assert response.headers.get('set-cookie') == f'{COOKIE_NAME__CBR__SESSION_ID__USER}={session_id}; HttpOnly; Path=/; SameSite=lax'
 

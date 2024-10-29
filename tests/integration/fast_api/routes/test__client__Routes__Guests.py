@@ -24,4 +24,5 @@ class test__client__Routes__Guests(TestCase):
     def test__guests__data(self):
         response    = self.client.get('/guests/data')
         guests_data = response.json()
-        assert guests_data[self.guest_id] == self.db_guest.guest_config().json()
+        assert guests_data[self.guest_id] == dict(guest_config = self.db_guest          .guest_config().json(),
+                                                  user_data    = self.db_guest.db_user().user_profile().json())
