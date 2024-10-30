@@ -1,6 +1,7 @@
 from unittest                                           import TestCase
 from cbr_shared.cbr_backend.session.Temp_DB_Session     import Temp_DB_Session
-from cbr_shared.cbr_sites.CBR__Shared__Constants        import COOKIE_NAME__CBR__SESSION_ID__USER
+from cbr_shared.cbr_sites.CBR__Shared__Constants import COOKIE_NAME__CBR__SESSION_ID__USER, \
+    COOKIE_NAME__CBR__SESSION_ID__ACTIVE
 from cbr_user_session.fast_api.routes.Routes__Session   import Routes__Session
 from osbot_fast_api.utils.Fast_API__Request             import Fast_API__Request
 from osbot_utils.helpers.Random_Guid                    import Random_Guid
@@ -20,7 +21,7 @@ class test__int__Routes__Session(TestCase):
         with Temp_DB_Session(session_id=session_id) as temp_session:
             with self.routes_session as _:
                 assert _.session_exists(session_id) is True
-                with Fast_API__Request().set_cookie(COOKIE_NAME__CBR__SESSION_ID__USER,session_id) as request:
+                with Fast_API__Request().set_cookie(COOKIE_NAME__CBR__SESSION_ID__ACTIVE,session_id) as request:
                     assert _.current_session(request) == temp_session.session_config().json()
 
 

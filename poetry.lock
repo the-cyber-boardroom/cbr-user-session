@@ -71,13 +71,13 @@ crt = ["awscrt (==0.22.0)"]
 
 [[package]]
 name = "cbr-content"
-version = "0.9.68"
+version = "0.9.69"
 description = "CBR - Content"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "cbr_content-0.9.68-py3-none-any.whl", hash = "sha256:b80adf7e79a10f152746a6576b16646dcb52c4cff276b8367f3e0f1eaf8afaaf"},
-    {file = "cbr_content-0.9.68.tar.gz", hash = "sha256:b38e4180047a1dc46089ce83c5875bf96032d2997c1edbb9b539c8358b38dbeb"},
+    {file = "cbr_content-0.9.69-py3-none-any.whl", hash = "sha256:49127a5b46c01c657dc62d8fadb0a9fdf328406aaead092b5589bd7c4355ceee"},
+    {file = "cbr_content-0.9.69.tar.gz", hash = "sha256:27bc94ab9f5c8c0c631ee2ff7120beb185f88bac12d75615ff36780669975020"},
 ]
 
 [package.dependencies]
@@ -85,13 +85,13 @@ osbot-markdown = "*"
 
 [[package]]
 name = "cbr-shared"
-version = "0.3.39"
+version = "0.3.40"
 description = "CBR - Shared"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "cbr_shared-0.3.39-py3-none-any.whl", hash = "sha256:c8db0273dcd35a7d3242f3a9b6323befc7e49aecef197779db4030cc2d830425"},
-    {file = "cbr_shared-0.3.39.tar.gz", hash = "sha256:c7c60d532dcbf51926c439d1d69745f24f79ec58a384db7704ccdedd32c838aa"},
+    {file = "cbr_shared-0.3.40-py3-none-any.whl", hash = "sha256:dd40f7a534dd34d29f818cd66c69999c19621a75dd24405b69c313b585f12f53"},
+    {file = "cbr_shared-0.3.40.tar.gz", hash = "sha256:937fbc2a69e5ae24a0cb1ac739696ccc960235063b94e3b6d3e80eb90868dd0c"},
 ]
 
 [package.dependencies]

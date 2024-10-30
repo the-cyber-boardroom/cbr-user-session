@@ -84,7 +84,8 @@ class Routes__Guest(Fast_API_Routes):
     def logout_all(self):
         """Logs out all profiles by clearing their session cookies"""
         json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_OUT_ALL))
-        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__USER)
+        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE )
+        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__USER   )
         json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__PERSONA)
         return json_response
 
