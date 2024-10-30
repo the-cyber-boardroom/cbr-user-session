@@ -1,6 +1,8 @@
 from starlette.responses                                import JSONResponse
 from cbr_shared.cbr_sites.CBR__Shared_Objects           import cbr_shared_objects
-from cbr_shared.cbr_sites.CBR__Shared__Constants        import COOKIE_NAME__CBR__SESSION_ID__USER, COOKIE_NAME__CBR__SESSION_ID__PERSONA, HEADER_NAME__CBR__SESSION_ID__USER, HEADER_NAME__CBR__SESSION_ID__PERSONA
+from cbr_shared.cbr_sites.CBR__Shared__Constants import COOKIE_NAME__CBR__SESSION_ID__USER, \
+    COOKIE_NAME__CBR__SESSION_ID__PERSONA, HEADER_NAME__CBR__SESSION_ID__USER, HEADER_NAME__CBR__SESSION_ID__PERSONA, \
+    COOKIE_NAME__CBR__SESSION_ID__ACTIVE
 from osbot_fast_api.api.Fast_API_Routes                 import Fast_API_Routes
 from osbot_utils.utils.Status                           import status_ok, status_error
 from osbot_utils.decorators.methods.cache_on_self       import cache_on_self
@@ -56,26 +58,24 @@ class Routes__Guest(Fast_API_Routes):
         if db_guest.exists():
             db_session = db_guest.db_session()
             if db_session.exists():
-                cookie_name    = COOKIE_NAME__CBR__SESSION_ID__USER
-                cookie_value   = db_session.session_id
                 json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_IN_AS_USER))
-                json_response.set_cookie(key=cookie_name, value=cookie_value, httponly=True)
-                json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__USER, cookie_value)
+                json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__USER  , value=db_session.session_id )
+                json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)
+                json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__USER,db_session.session_id)
                 return json_response
             return status_error(STATUS_ERROR__FOUND_GUEST_BUT_NO_ACTIVE_SESSION)
         else:
             return status_error(STATUS_ERROR__GUEST_NOT_FOUND)
 
-    def login_as_persona(self, persona_id):                             # todo: refactor Personas our out of Guest (when there is features and capabilities that only Personas have, when compared with Guests)
+    def login_as_persona(self, persona_id):
         db_guest = self.db_guests().db_guest(persona_id)
         if db_guest.exists():
             db_session = db_guest.db_session()
             if db_session.exists():
-                cookie_name    = COOKIE_NAME__CBR__SESSION_ID__PERSONA
-                cookie_value   = db_session.session_id
                 json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_IN_AS_PERSONA))
-                json_response.set_cookie(key=cookie_name, value=cookie_value, httponly=True)
-                json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__PERSONA, cookie_value)
+                json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__PERSONA, value=db_session.session_id)
+                json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)
+                json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__PERSONA, db_session.session_id)
                 return json_response
             return status_error(STATUS_ERROR__FOUND_PERSONA_BUT_NO_ACTIVE_SESSION)
         else:
