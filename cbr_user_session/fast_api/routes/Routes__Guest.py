@@ -59,8 +59,15 @@ class Routes__Guest(Fast_API_Routes):
             db_session = db_guest.db_session()
             if db_session.exists():
                 json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_IN_AS_USER))
-                json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__USER  , value=db_session.session_id )
-                json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)
+                #json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__USER  , value=db_session.session_id )           # todo: fix this to use json_response.headers.append
+                #json_response.set_cookie( key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)            #       because FastAPI doesn't support multiple set_cookie
+
+                session_id_user_cookie   = f"{COOKIE_NAME__CBR__SESSION_ID__USER  }={db_session.session_id}; Path=/;"  # needs to be done like this because FastAPI's bug of not supporting multiple json_response.set_cookie
+                session_id_active_cookie = f"{COOKIE_NAME__CBR__SESSION_ID__ACTIVE}={db_session.session_id}; Path=/;"
+
+                json_response.headers.append("Set-Cookie", session_id_user_cookie)
+                json_response.headers.append("Set-Cookie", session_id_active_cookie)
+
                 json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__USER,db_session.session_id)
                 return json_response
             return status_error(STATUS_ERROR__FOUND_GUEST_BUT_NO_ACTIVE_SESSION)
@@ -73,20 +80,31 @@ class Routes__Guest(Fast_API_Routes):
             db_session = db_guest.db_session()
             if db_session.exists():
                 json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_IN_AS_PERSONA))
-                json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__PERSONA, value=db_session.session_id)
-                json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)
+                # json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__PERSONA, value=db_session.session_id)
+                # json_response.set_cookie(key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE, value=db_session.session_id)
+
+                session_id_persona_cookie = f"{COOKIE_NAME__CBR__SESSION_ID__PERSONA}={db_session.session_id}; Path=/;"     # needs to be done like this because FastAPI's bug of not supporting multiple json_response.set_cookie
+                session_id_active_cookie  = f"{COOKIE_NAME__CBR__SESSION_ID__ACTIVE}={db_session.session_id}; Path=/;"
+
+                json_response.headers.append("Set-Cookie", session_id_persona_cookie)
+                json_response.headers.append("Set-Cookie", session_id_active_cookie )
+
                 json_response.headers.append(HEADER_NAME__CBR__SESSION_ID__PERSONA, db_session.session_id)
                 return json_response
             return status_error(STATUS_ERROR__FOUND_PERSONA_BUT_NO_ACTIVE_SESSION)
         else:
             return status_error(STATUS_ERROR__PERSONA_NOT_FOUND)
 
-    def logout_all(self):
-        """Logs out all profiles by clearing their session cookies"""
-        json_response = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_OUT_ALL))
-        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__ACTIVE )
-        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__USER   )
-        json_response.delete_cookie(key=COOKIE_NAME__CBR__SESSION_ID__PERSONA)
+    def logout_all(self):                               # Logs out all profiles by clearing their session cookies
+        json_response             = JSONResponse(content=status_ok(message=STATUS_OK__LOGGED_OUT_ALL))
+        session_id_active_cookie  = f"{COOKIE_NAME__CBR__SESSION_ID__ACTIVE }=; Path=/; Max-Age=0;"          # Create cookie deletion headers with Path set to /
+        session_id_user_cookie    = f"{COOKIE_NAME__CBR__SESSION_ID__USER   }=; Path=/; Max-Age=0;"
+        session_id_persona_cookie = f"{COOKIE_NAME__CBR__SESSION_ID__PERSONA}=; Path=/; Max-Age=0;"
+
+        json_response.headers.append("Set-Cookie", session_id_active_cookie )                           # Append cookie deletion headers to the response
+        json_response.headers.append("Set-Cookie", session_id_user_cookie   )
+        json_response.headers.append("Set-Cookie", session_id_persona_cookie)
+
         return json_response
 
     def logout_guest(self):
