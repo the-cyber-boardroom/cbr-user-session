@@ -38,6 +38,7 @@ class test__int__Routes__Session(TestCase):
                                                 bucket_name__suffix            = 'server-data'                  ,
                                                 bucket_name__prefix            = 'cyber-boardroom'              ,
                                                 bucket_name__insert_account_id = True                           ,
+                                                bucket_versioning              = True                           ,
                                                 save_as_gz                     = False                          ,
                                                 server_name                    ='unknown-server'                ,
                                                 session_kwargs__s3             = __(service_name        = 's3' ,
