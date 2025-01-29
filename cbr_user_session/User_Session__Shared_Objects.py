@@ -1,4 +1,4 @@
-from osbot_utils.base_classes.Type_Safe             import Type_Safe
+from osbot_utils.type_safe.Type_Safe                   import Type_Safe
 
 class User_Session__Shared_Objects(Type_Safe):
     pass

@@ -1,4 +1,4 @@
-from osbot_utils.base_classes.Type_Safe     import Type_Safe
+from osbot_utils.type_safe.Type_Safe           import Type_Safe
 from osbot_utils.helpers.Random_Guid_Short  import Random_Guid_Short
 from osbot_utils.utils.Env                  import get_env, set_env
 

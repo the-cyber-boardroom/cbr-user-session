@@ -1,5 +1,5 @@
 from cbr_shared.cbr_sites.CBR__Shared_Objects       import cbr_shared_objects
-from osbot_utils.base_classes.Type_Safe             import Type_Safe
+from osbot_utils.type_safe.Type_Safe                   import Type_Safe
 from osbot_utils.decorators.methods.cache_on_self   import cache_on_self
 
 
